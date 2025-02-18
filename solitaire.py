@@ -4,11 +4,13 @@ import cards
 
 class Solitaire():
     def __init__(self):
-        self._deck = cards.Deck
-        # [[(suit, number, revealed)]]
-        # self._cols = [[(self._deck.pop(np.random.randint(0, len(self._deck))), True if i == 0 else False) for i in range(0, j)] for j in range(1, 8)]
-        self._foundations = [[] * 4]
-        self._current = []
+        self._deck = cards.Deck()
+        self._cols = [cards.Hand(self._deck, i) for i in range(1, 8)]
+        self._foundations = [cards.Hand(self._deck, 0) for i in range(4)]
+        self._current = [cards.Hand(self._deck, 0)]
+
+        for col in self._cols:
+            col.show(0)
 
     def move_cols(self, cur = (0, 0), next = (0, 0)):
         cur_card = self._cols[cur[0]][cur[1]]
@@ -30,6 +32,8 @@ class Solitaire():
             
 np.random.seed(10)
 sol = Solitaire()
-# for i in sol._cols:
-#     for j in i:
-#         if (j[2])
+for i in sol._cols:
+    for j in i._hand:
+        if j._revealed:
+            print(j, end=' ')
+    print()
